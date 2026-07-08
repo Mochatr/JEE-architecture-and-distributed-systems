@@ -7,6 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import javax.swing.*;
+import java.util.List;
+
 @SpringBootApplication
 public class DemoBdccSpringDataApplication {
 
@@ -30,6 +33,10 @@ public class DemoBdccSpringDataApplication {
             productRepository.save(p2);
             productRepository.save(p3);
 
+            List<Product> products = productRepository.findAll();
+            products.forEach(p->{
+                System.out.println(p.toString());
+            });
         };
     }
 }
