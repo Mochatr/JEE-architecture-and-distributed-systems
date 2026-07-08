@@ -32,4 +32,9 @@ public class ProductRestController {
     public Product save(@RequestBody Product product){
         return productRepository.save(product);
     }
+
+    @DeleteMapping("/products/{id}")
+    public void deleteById(@PathVariable Long id) {
+        productRepository.deleteById(id);
+    }
 }
