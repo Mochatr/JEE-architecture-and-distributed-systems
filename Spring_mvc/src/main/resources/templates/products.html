@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Liste des produits')}"></head>
+<body>
+<div th:replace="~{layout :: layout('Liste des produits', ~{::content})}">
+    <th:block th:ref="content">
+        <div th:fragment="content">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Liste des produits</h2>
+                <a class="btn btn-primary" href="/newProduct" sec:authorize="isAuthenticated()"
+                   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">Ajouter un produit</a>
+            </div>
+
+            <form method="get" th:action="@{/index}" class="row g-2 mb-3">
+                <div class="col-auto">
+                    <input type="text" class="form-control" name="keyword" th:value="${keyword}"
+                           placeholder="Rechercher un produit...">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
+                </div>
+            </form>
+
+            <div th:if="${msg}" class="alert alert-success" th:text="${msg}"></div>
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Quantite</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${listProducts}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.quantity}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" th:href="@{/editProduct(id=${product.id})}"
+                           sec:authorize="isAuthenticated()"
+                           xmlns:sec="http://www.thymeleaf.org/extras/spring-security">Editer</a>
+                        <a class="btn btn-sm btn-danger" th:href="@{/deleteProduct(id=${product.id})}"
+                           onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?')"
+                           sec:authorize="isAuthenticated()"
+                           xmlns:sec="http://www.thymeleaf.org/extras/spring-security">Supprimer</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav th:if="${pages.totalPages > 1}">
+                <ul class="pagination">
+                    <li class="page-item" th:each="p : ${#numbers.sequence(0, pages.totalPages - 1)}"
+                        th:classappend="${p == currentPage} ? 'active'">
+                        <a class="page-link" th:href="@{/index(page=${p}, keyword=${keyword})}" th:text="${p + 1}"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>
