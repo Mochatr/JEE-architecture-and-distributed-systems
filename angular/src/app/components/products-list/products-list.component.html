@@ -1,0 +1,43 @@
+<h2>Liste des produits</h2>
+
+<div class="row g-2 mb-3">
+  <div class="col-auto">
+    <input type="text" class="form-control" placeholder="Rechercher un produit..."
+           [(ngModel)]="keyword" (keyup.enter)="onSearch()">
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-outline-secondary" (click)="onSearch()">Rechercher</button>
+  </div>
+</div>
+
+<div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<div class="alert alert-info" *ngIf="!errorMessage && products.length === 0">
+  Aucun produit trouve.
+</div>
+
+<table class="table table-striped table-bordered" *ngIf="products.length > 0">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>Prix</th>
+    <th>Quantite</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let product of products">
+    <td>{{ product.id }}</td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.description }}</td>
+    <td>{{ product.price | currency:'EUR' }}</td>
+    <td>{{ product.quantity }}</td>
+    <td>
+      <a class="btn btn-sm btn-info" [routerLink]="['/products', product.id]">Details</a>
+      <button class="btn btn-sm btn-danger" (click)="onDelete(product.id)">Supprimer</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

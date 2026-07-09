@@ -1,0 +1,13 @@
+<div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<div class="card" *ngIf="product">
+  <div class="card-body">
+    <h2 class="card-title">{{ product.name }}</h2>
+    <p class="card-text">{{ product.description }}</p>
+    <ul class="list-group list-group-flush mb-3">
+      <li class="list-group-item"><strong>Prix :</strong> {{ product.price | currency:'EUR' }}</li>
+      <li class="list-group-item"><strong>Quantite :</strong> {{ product.quantity }}</li>
+    </ul>
+    <a routerLink="/products" class="btn btn-secondary">Retour a la liste</a>
+  </div>
+</div>

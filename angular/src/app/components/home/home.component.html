@@ -1,0 +1,15 @@
+<div class="text-center py-5">
+  <img [src]="logoUrl" alt="Angular logo" width="72" height="72" class="mb-3">
+
+  <h1>Bienvenue sur {{ appName }}</h1>
+  <p class="lead">{{ description }}</p>
+
+  <div class="alert alert-success d-inline-block" *ngIf="isReady">
+    L'application est prete !
+  </div>
+
+  <div class="mt-4">
+    <a routerLink="/products" class="btn btn-primary me-2">Voir les produits</a>
+    <a routerLink="/new-product" class="btn btn-outline-secondary">Ajouter un produit</a>
+  </div>
+</div>
