@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <a routerLink="/customers" class="btn btn-link px-0">&larr; Retour aux clients</a>
+  <h2>Comptes de {{ customer?.name }}</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Solde</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let account of accounts">
+        <td>{{ account.id }}</td>
+        <td>{{ account.overDraft !== undefined ? 'Compte courant' : 'Compte épargne' }}</td>
+        <td>{{ account.balance | number: '1.2-2' }} DH</td>
+        <td>{{ account.status }}</td>
+        <td>
+          <a [routerLink]="['/accounts', account.id]" class="btn btn-sm btn-info">Détails</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="mt-4">Ajouter un compte</h4>
+  <form (ngSubmit)="addAccount()" class="row g-2 align-items-end">
+    <div class="col-auto">
+      <label class="form-label">Type</label>
+      <select class="form-select" [(ngModel)]="newAccountType" name="newAccountType">
+        <option value="current">Compte courant</option>
+        <option value="saving">Compte épargne</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <label class="form-label">Solde initial</label>
+      <input type="number" class="form-control" [(ngModel)]="initialBalance" name="initialBalance" required>
+    </div>
+    <div class="col-auto" *ngIf="newAccountType === 'current'">
+      <label class="form-label">Découvert autorisé</label>
+      <input type="number" class="form-control" [(ngModel)]="overDraft" name="overDraft">
+    </div>
+    <div class="col-auto" *ngIf="newAccountType === 'saving'">
+      <label class="form-label">Taux d'intérêt (%)</label>
+      <input type="number" class="form-control" [(ngModel)]="interestRate" name="interestRate">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </div>
+  </form>
+</div>

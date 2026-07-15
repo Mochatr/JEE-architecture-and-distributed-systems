@@ -1,0 +1,51 @@
+<div class="container mt-4" *ngIf="account">
+  <a routerLink="/customers" class="btn btn-link px-0">&larr; Retour aux clients</a>
+  <h2>Compte {{ account.id }}</h2>
+  <p>
+    Client : <strong>{{ account.customerDTO.name }}</strong> &mdash;
+    Solde : <strong>{{ account.balance | number: '1.2-2' }} DH</strong> &mdash;
+    Statut : {{ account.status }}
+  </p>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <div class="row g-2 align-items-end mb-4">
+    <div class="col-auto">
+      <label class="form-label">Montant</label>
+      <input type="number" class="form-control" [(ngModel)]="operationAmount" name="operationAmount">
+    </div>
+    <div class="col-auto">
+      <label class="form-label">Description</label>
+      <input type="text" class="form-control" [(ngModel)]="operationDescription" name="operationDescription">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-success me-2" (click)="credit()">Créditer</button>
+      <button class="btn btn-warning" (click)="debit()">Débiter</button>
+    </div>
+  </div>
+
+  <h4>Historique des opérations</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Montant</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let op of operations">
+        <td>{{ op.operationDate | date: 'short' }}</td>
+        <td>
+          <span class="badge" [class.bg-success]="op.type === 'CREDIT'" [class.bg-warning]="op.type === 'DEBIT'">
+            {{ op.type }}
+          </span>
+        </td>
+        <td>{{ op.amount | number: '1.2-2' }} DH</td>
+        <td>{{ op.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

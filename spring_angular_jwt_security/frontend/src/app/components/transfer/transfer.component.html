@@ -1,0 +1,22 @@
+<div class="container mt-4" style="max-width: 500px;">
+  <h2>Virement entre comptes</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <form (ngSubmit)="transfer()">
+    <div class="mb-3">
+      <label class="form-label">Compte source</label>
+      <input type="text" class="form-control" [(ngModel)]="accountSource" name="accountSource" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Compte destination</label>
+      <input type="text" class="form-control" [(ngModel)]="accountDestination" name="accountDestination" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Montant</label>
+      <input type="number" class="form-control" [(ngModel)]="amount" name="amount" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Virer</button>
+  </form>
+</div>
