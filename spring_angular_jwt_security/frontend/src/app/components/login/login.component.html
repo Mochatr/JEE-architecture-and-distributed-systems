@@ -1,0 +1,17 @@
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="mb-4 text-center">Connexion</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="login()">
+    <div class="mb-3">
+      <label class="form-label">Nom d'utilisateur</label>
+      <input type="text" class="form-control" formControlName="username">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Mot de passe</label>
+      <input type="password" class="form-control" formControlName="password">
+    </div>
+    <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid">Se connecter</button>
+  </form>
+</div>
