@@ -5,6 +5,7 @@ import { CustomerAccountsComponent } from './components/customer-accounts/custom
 import { AccountDetailsComponent } from './components/account-details/account-details.component';
 import { TransferComponent } from './components/transfer/transfer.component';
 import { LoginComponent } from './components/login/login.component';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -14,5 +15,6 @@ export const routes: Routes = [
   { path: 'customers/new', component: NewCustomerComponent, canActivate: [authGuard] },
   { path: 'customers/:customerId/accounts', component: CustomerAccountsComponent, canActivate: [authGuard] },
   { path: 'accounts/:accountId', component: AccountDetailsComponent, canActivate: [authGuard] },
-  { path: 'transfer', component: TransferComponent, canActivate: [authGuard] }
+  { path: 'transfer', component: TransferComponent, canActivate: [authGuard] },
+  { path: 'chatbot', component: ChatbotComponent, canActivate: [authGuard] }
 ];

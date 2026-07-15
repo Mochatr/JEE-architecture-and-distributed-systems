@@ -4,6 +4,7 @@
     <div class="navbar-nav me-auto" *ngIf="authService.isAuthenticated()">
       <a class="nav-link" routerLink="/customers" routerLinkActive="active">Clients</a>
       <a class="nav-link" routerLink="/transfer" routerLinkActive="active">Virement</a>
+      <a class="nav-link" routerLink="/chatbot" routerLinkActive="active">Assistant</a>
     </div>
     <div class="navbar-nav" *ngIf="authService.isAuthenticated(); else loginLink">
       <span class="nav-link text-white-50">{{ authService.getUsername() }}</span>

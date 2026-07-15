@@ -1,0 +1,22 @@
+<div class="container mt-4" style="max-width: 700px;">
+  <h2>Assistant E-Bank</h2>
+  <p class="text-muted">Posez une question sur les comptes bancaires (ex : "Quel est le solde de Hassan ?").</p>
+
+  <div class="border rounded p-3 mb-3" style="height: 400px; overflow-y: auto;">
+    <div *ngFor="let message of messages" class="mb-2 d-flex" [class.justify-content-end]="message.author === 'user'">
+      <div class="p-2 rounded"
+           [class.bg-primary]="message.author === 'user'"
+           [class.text-white]="message.author === 'user'"
+           [class.bg-light]="message.author === 'bot'"
+           style="max-width: 75%;">
+        {{ message.text }}
+      </div>
+    </div>
+    <div *ngIf="loading" class="text-muted">L'assistant réfléchit...</div>
+  </div>
+
+  <form class="input-group" (ngSubmit)="ask()">
+    <input type="text" class="form-control" placeholder="Votre question..." [(ngModel)]="question" name="question">
+    <button type="submit" class="btn btn-primary" [disabled]="loading || !question.trim()">Envoyer</button>
+  </form>
+</div>
