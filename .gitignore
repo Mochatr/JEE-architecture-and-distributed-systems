@@ -1,2 +1,17 @@
 .claude/
 .idea/
+
+# Sensitive project notes / secrets
+spring_angular_jwt_security/file.md
+.env
+*.env
+!*.env.example
+
+# Java / Spring Boot
+target/
+*.class
+
+# Angular / Node
+node_modules/
+dist/
+.angular/
