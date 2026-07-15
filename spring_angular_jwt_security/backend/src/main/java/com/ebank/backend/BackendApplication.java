@@ -1,13 +1,19 @@
 package com.ebank.backend;
 
+import com.ebank.backend.entities.AppRole;
+import com.ebank.backend.entities.AppUser;
 import com.ebank.backend.entities.Customer;
+import com.ebank.backend.repositories.AppRoleRepository;
+import com.ebank.backend.repositories.AppUserRepository;
 import com.ebank.backend.repositories.CustomerRepository;
 import com.ebank.backend.services.BankAccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -18,8 +24,21 @@ public class BackendApplication {
     }
 
     @Bean
-    CommandLineRunner start(CustomerRepository customerRepository, BankAccountService bankAccountService) {
+    CommandLineRunner start(CustomerRepository customerRepository,
+                             BankAccountService bankAccountService,
+                             AppUserRepository appUserRepository,
+                             AppRoleRepository appRoleRepository,
+                             PasswordEncoder passwordEncoder) {
         return args -> {
+            AppRole userRole = appRoleRepository.save(new AppRole(null, "USER"));
+            AppRole adminRole = appRoleRepository.save(new AppRole(null, "ADMIN"));
+
+            AppUser admin = new AppUser(null, "admin", passwordEncoder.encode("admin123"), List.of(userRole, adminRole));
+            appUserRepository.save(admin);
+
+            AppUser user = new AppUser(null, "user", passwordEncoder.encode("user123"), List.of(userRole));
+            appUserRepository.save(user);
+
             Stream.of("Hassan", "Imane", "Mohamed").forEach(name -> {
                 Customer customer = new Customer();
                 customer.setName(name);

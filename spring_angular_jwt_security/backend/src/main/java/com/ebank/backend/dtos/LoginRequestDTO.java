@@ -1,0 +1,14 @@
+package com.ebank.backend.dtos;
+
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
+
+@Data
+public class LoginRequestDTO {
+
+    @NotEmpty(message = "Le nom d'utilisateur est obligatoire")
+    private String username;
+
+    @NotEmpty(message = "Le mot de passe est obligatoire")
+    private String password;
+}

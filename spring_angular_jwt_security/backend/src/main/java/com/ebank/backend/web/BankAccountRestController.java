@@ -15,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin("*")
 @Tag(name = "Bank Accounts", description = "Gestion des comptes bancaires et des opérations")
 public class BankAccountRestController {
 

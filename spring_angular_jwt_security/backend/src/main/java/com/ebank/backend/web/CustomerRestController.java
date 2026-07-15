@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin("*")
 @Tag(name = "Customers", description = "Gestion des clients")
 public class CustomerRestController {
 
