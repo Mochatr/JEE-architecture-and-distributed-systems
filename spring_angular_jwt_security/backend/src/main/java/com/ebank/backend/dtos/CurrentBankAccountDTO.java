@@ -13,4 +13,5 @@ public class CurrentBankAccountDTO implements BankAccountDTO {
     private AccountStatus status;
     private CustomerDTO customerDTO;
     private double overDraft;
+    private String createdBy;
 }

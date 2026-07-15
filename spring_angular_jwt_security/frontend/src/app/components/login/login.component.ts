@@ -26,7 +26,7 @@ export class LoginComponent {
     if (this.form.invalid) return;
     this.errorMessage = '';
     this.authService.login(this.form.value).subscribe({
-      next: () => this.router.navigateByUrl('/customers'),
+      next: () => this.router.navigateByUrl('/dashboard'),
       error: (err) => (this.errorMessage = err.error?.message || 'Échec de la connexion')
     });
   }

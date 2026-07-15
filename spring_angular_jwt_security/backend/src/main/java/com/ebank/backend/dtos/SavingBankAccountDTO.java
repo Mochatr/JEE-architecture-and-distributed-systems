@@ -13,4 +13,5 @@ public class SavingBankAccountDTO implements BankAccountDTO {
     private AccountStatus status;
     private CustomerDTO customerDTO;
     private double interestRate;
+    private String createdBy;
 }

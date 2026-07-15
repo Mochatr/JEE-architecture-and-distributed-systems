@@ -33,6 +33,7 @@
         <th>Type</th>
         <th>Montant</th>
         <th>Description</th>
+        <th>Effectué par</th>
       </tr>
     </thead>
     <tbody>
@@ -45,6 +46,7 @@
         </td>
         <td>{{ op.amount | number: '1.2-2' }} DH</td>
         <td>{{ op.description }}</td>
+        <td>{{ op.createdBy }}</td>
       </tr>
     </tbody>
   </table>

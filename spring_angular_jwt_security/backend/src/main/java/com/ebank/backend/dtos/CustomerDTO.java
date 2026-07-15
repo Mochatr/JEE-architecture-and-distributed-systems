@@ -14,4 +14,6 @@ public class CustomerDTO {
     @Email(message = "L'email n'est pas valide")
     @NotEmpty(message = "L'email est obligatoire")
     private String email;
+
+    private String createdBy;
 }

@@ -71,4 +71,9 @@ public class BankAccountRestController {
         bankAccountService.transfer(request.getAccountSource(), request.getAccountDestination(), request.getAmount());
         return Map.of("message", "Transfert effectué avec succès");
     }
+
+    @GetMapping("/dashboard/stats")
+    public DashboardStatsDTO dashboardStats() {
+        return bankAccountService.getDashboardStats();
+    }
 }

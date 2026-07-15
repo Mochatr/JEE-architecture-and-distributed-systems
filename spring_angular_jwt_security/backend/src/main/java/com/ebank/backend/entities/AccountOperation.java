@@ -28,6 +28,8 @@ public class AccountOperation {
 
     private String description;
 
+    private String createdBy;
+
     @ManyToOne
     @JsonIgnore
     private BankAccount bankAccount;

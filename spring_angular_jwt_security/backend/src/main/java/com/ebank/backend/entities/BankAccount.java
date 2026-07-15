@@ -26,6 +26,8 @@ public class BankAccount {
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
 
+    private String createdBy;
+
     @ManyToOne
     private Customer customer;
 

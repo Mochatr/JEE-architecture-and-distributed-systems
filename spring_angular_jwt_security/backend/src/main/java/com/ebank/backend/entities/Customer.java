@@ -23,6 +23,8 @@ public class Customer {
     @Column(unique = true)
     private String email;
 
+    private String createdBy;
+
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<BankAccount> bankAccounts;

@@ -39,4 +39,6 @@ public interface BankAccountService {
             throws BankAccountNotFoundException, BalanceNotSufficientException;
 
     List<AccountOperationDTO> accountHistory(String accountId);
+
+    DashboardStatsDTO getDashboardStats();
 }

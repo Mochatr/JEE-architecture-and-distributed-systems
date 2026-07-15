@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <h2>Dashboard</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <div class="row mb-4" *ngIf="stats">
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <div class="fs-4">{{ stats.totalCustomers }}</div>
+        <div class="text-muted">Clients</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <div class="fs-4">{{ stats.totalCurrentAccounts + stats.totalSavingAccounts }}</div>
+        <div class="text-muted">Comptes</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <div class="fs-4">{{ stats.totalBalance | number: '1.2-2' }} DH</div>
+        <div class="text-muted">Solde total</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center p-3">
+        <div class="fs-4">{{ stats.totalCredits - stats.totalDebits | number: '1.2-2' }} DH</div>
+        <div class="text-muted">Flux net</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <h5>Répartition des comptes</h5>
+      <canvas #accountsChart></canvas>
+    </div>
+    <div class="col-md-6 mb-4">
+      <h5>Crédits vs Débits</h5>
+      <canvas #operationsChart></canvas>
+    </div>
+  </div>
+</div>

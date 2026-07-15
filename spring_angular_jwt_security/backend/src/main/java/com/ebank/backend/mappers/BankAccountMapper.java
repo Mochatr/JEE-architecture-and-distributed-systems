@@ -12,6 +12,7 @@ public class BankAccountMapper {
         customerDTO.setId(customer.getId());
         customerDTO.setName(customer.getName());
         customerDTO.setEmail(customer.getEmail());
+        customerDTO.setCreatedBy(customer.getCreatedBy());
         return customerDTO;
     }
 
@@ -31,6 +32,7 @@ public class BankAccountMapper {
         dto.setStatus(currentAccount.getStatus());
         dto.setOverDraft(currentAccount.getOverDraft());
         dto.setCustomerDTO(fromCustomer(currentAccount.getCustomer()));
+        dto.setCreatedBy(currentAccount.getCreatedBy());
         return dto;
     }
 
@@ -42,6 +44,7 @@ public class BankAccountMapper {
         dto.setStatus(savingAccount.getStatus());
         dto.setInterestRate(savingAccount.getInterestRate());
         dto.setCustomerDTO(fromCustomer(savingAccount.getCustomer()));
+        dto.setCreatedBy(savingAccount.getCreatedBy());
         return dto;
     }
 
@@ -61,6 +64,7 @@ public class BankAccountMapper {
         dto.setAmount(accountOperation.getAmount());
         dto.setType(accountOperation.getType());
         dto.setDescription(accountOperation.getDescription());
+        dto.setCreatedBy(accountOperation.getCreatedBy());
         return dto;
     }
 }

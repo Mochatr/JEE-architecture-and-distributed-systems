@@ -11,6 +11,7 @@ export interface BankAccount {
   customerDTO: Customer;
   overDraft?: number;
   interestRate?: number;
+  createdBy?: string;
 }
 
 export interface AccountOperation {
@@ -19,4 +20,5 @@ export interface AccountOperation {
   amount: number;
   type: OperationType;
   description: string;
+  createdBy?: string;
 }

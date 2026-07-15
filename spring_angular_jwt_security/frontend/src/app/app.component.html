@@ -1,13 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" routerLink="/customers">E-Bank</a>
+    <a class="navbar-brand" routerLink="/dashboard">E-Bank</a>
     <div class="navbar-nav me-auto" *ngIf="authService.isAuthenticated()">
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a class="nav-link" routerLink="/customers" routerLinkActive="active">Clients</a>
       <a class="nav-link" routerLink="/transfer" routerLinkActive="active">Virement</a>
       <a class="nav-link" routerLink="/chatbot" routerLinkActive="active">Assistant</a>
     </div>
     <div class="navbar-nav" *ngIf="authService.isAuthenticated(); else loginLink">
-      <span class="nav-link text-white-50">{{ authService.getUsername() }}</span>
+      <a class="nav-link" routerLink="/change-password" routerLinkActive="active">{{ authService.getUsername() }}</a>
       <button class="btn btn-outline-light btn-sm" (click)="logout()">Déconnexion</button>
     </div>
     <ng-template #loginLink>

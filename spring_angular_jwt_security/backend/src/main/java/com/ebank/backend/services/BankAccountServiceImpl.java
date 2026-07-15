@@ -13,6 +13,8 @@ import com.ebank.backend.repositories.BankAccountRepository;
 import com.ebank.backend.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +33,15 @@ public class BankAccountServiceImpl implements BankAccountService {
     private final AccountOperationRepository accountOperationRepository;
     private final BankAccountMapper bankAccountMapper;
 
+    private String currentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null ? authentication.getName() : "system";
+    }
+
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
         Customer customer = bankAccountMapper.fromCustomerDTO(customerDTO);
+        customer.setCreatedBy(currentUsername());
         Customer savedCustomer = customerRepository.save(customer);
         return bankAccountMapper.fromCustomer(savedCustomer);
     }
@@ -85,6 +93,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         currentAccount.setOverDraft(overDraft);
         currentAccount.setStatus(AccountStatus.CREATED);
         currentAccount.setCustomer(customer);
+        currentAccount.setCreatedBy(currentUsername());
 
         return bankAccountMapper.fromCurrentAccount(bankAccountRepository.save(currentAccount));
     }
@@ -101,6 +110,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         savingAccount.setInterestRate(interestRate);
         savingAccount.setStatus(AccountStatus.CREATED);
         savingAccount.setCustomer(customer);
+        savingAccount.setCreatedBy(currentUsername());
 
         return bankAccountMapper.fromSavingAccount(bankAccountRepository.save(savingAccount));
     }
@@ -144,6 +154,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         operation.setType(OperationType.DEBIT);
         operation.setDescription(description);
         operation.setBankAccount(bankAccount);
+        operation.setCreatedBy(currentUsername());
         accountOperationRepository.save(operation);
 
         bankAccount.setBalance(bankAccount.getBalance() - amount);
@@ -161,6 +172,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         operation.setType(OperationType.CREDIT);
         operation.setDescription(description);
         operation.setBankAccount(bankAccount);
+        operation.setCreatedBy(currentUsername());
         accountOperationRepository.save(operation);
 
         bankAccount.setBalance(bankAccount.getBalance() + amount);
@@ -180,5 +192,30 @@ public class BankAccountServiceImpl implements BankAccountService {
                 .stream()
                 .map(bankAccountMapper::fromAccountOperation)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public DashboardStatsDTO getDashboardStats() {
+        List<BankAccount> accounts = bankAccountRepository.findAll();
+        long totalCurrentAccounts = accounts.stream().filter(a -> a instanceof CurrentAccount).count();
+        long totalSavingAccounts = accounts.stream().filter(a -> a instanceof SavingAccount).count();
+        double totalBalance = accounts.stream().mapToDouble(BankAccount::getBalance).sum();
+
+        List<AccountOperation> operations = accountOperationRepository.findAll();
+        double totalCredits = operations.stream()
+                .filter(op -> op.getType() == OperationType.CREDIT)
+                .mapToDouble(AccountOperation::getAmount).sum();
+        double totalDebits = operations.stream()
+                .filter(op -> op.getType() == OperationType.DEBIT)
+                .mapToDouble(AccountOperation::getAmount).sum();
+
+        return new DashboardStatsDTO(
+                customerRepository.count(),
+                totalCurrentAccounts,
+                totalSavingAccounts,
+                totalBalance,
+                totalCredits,
+                totalDebits
+        );
     }
 }

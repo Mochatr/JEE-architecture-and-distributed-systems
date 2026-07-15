@@ -45,4 +45,11 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
+
+  changePassword(currentPassword: string, newPassword: string): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(`${environment.backendUrl}/users/me/password`, {
+      currentPassword,
+      newPassword
+    });
+  }
 }
